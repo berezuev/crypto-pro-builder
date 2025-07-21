@@ -706,13 +706,14 @@ class CryptoPro
     private function structureMatches(array $matches, array $fields): array
     {
         $chunkSize = count($fields);
+        $matchesSize = count($matches);
         if ($chunkSize === 0) {
             return []; // Невозможно структурировать без полей
         }
 
         // Проверяем, что количество совпадений кратно размеру чанка
-        if (count($matches) % $chunkSize !== 0) {
-             throw new RuntimeException("Несоответствие количества найденных совпадений ({count($matches)}) и ожидаемых полей ({$chunkSize}) для структурирования.");
+        if ($matchesSize % $chunkSize !== 0) {
+             throw new RuntimeException("Несоответствие количества найденных совпадений ({$matchesSize}) и ожидаемых полей ({$chunkSize}) для структурирования.");
         }
 
         $structuredData = [];
@@ -746,7 +747,7 @@ class CryptoPro
             return $this->success();
         }
 
-        return $this->throwError();
+        $this->throwError();
     }
 
 
